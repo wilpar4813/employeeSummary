@@ -1,5 +1,6 @@
 //Install inquirer package
 const inquirer = require("inquirer");
+var fs = require('fs');
 //Install class constructors
 const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
@@ -39,12 +40,12 @@ function init() {
                 type: "list",
                 name: "title",
                 message: "What is the employee's title?",
-                choices: ["manager", "engineer", "intern"]
+                choices: ["Manager", "Engineer", "Intern"]
             }      
         ])
         .then(res => {
                 //From the response, if title is manager then ask for office number
-                if (res.title == "manager") {
+                if (res.title == "Manager") {
                     //Check to see if a manager has already been assigned
                     if (IsThereAManager === false) {
                         //If there is not a manager, set to there is a manager
@@ -61,7 +62,7 @@ function init() {
                             ])
                             //Use the second response to assign the managers office number to address
                             .then(res_two => {
-                                const newManager = new Manager(res.name, res.id, res.email, res_two.officeNumber);
+                                const newManager = new Manager(res.name, res.id, res.email, res.title, res_two.officeNumber);
                                 employees.push(newManager);
                                 anotherEmployee();
                             })
@@ -71,7 +72,7 @@ function init() {
                     } // end of IsThereAManager if/else statement
                    
                 } //End if for manager office number
-                else if (res.title == "engineer") {
+                else if (res.title == "Engineer") {
                     inquirer
                     //Ask for Engineer's GitHub Profile ID 
                         .prompt([
@@ -83,12 +84,12 @@ function init() {
                             }
                         ])
                         .then(res_three => {
-                            const newEngineer = new Engineer(res.name, res.id, res.email, res_three.gitHubProfile);
+                            const newEngineer = new Engineer(res.name, res.id, res.email, res.title, res_three.gitHubProfile);
                             employees.push(newEngineer);
                             anotherEmployee();
                         })
                         
-                } else if (res.title == "intern") {
+                } else if (res.title == "Intern") {
                     inquirer
                         //Ask for intern's school name
                         .prompt([
@@ -100,7 +101,7 @@ function init() {
                             }
                         ])
                         .then(res_four => {
-                            const newIntern = new Intern(res.name, res.id, res.email, res_four.school);
+                            const newIntern = new Intern(res.name, res.id, res.email, res.title, res_four.school);
                             employees.push(newIntern);
                             anotherEmployee();
                         })
@@ -146,14 +147,14 @@ function init() {
 
 
         function anotherEmployee() {
-
+            console.log(employees);
             inquirer
             .prompt([
                 {
                     type: "list",
                     name: "nextStep",
                     message: "Would you like to continue?",
-                    choices: ["Add another employee", "Print to HTML", "Exit"] 
+                    choices: ["Add another employee", "Save to HTML file", "Exit"] 
                 }
             ])
             .then(res_five => {                
@@ -161,13 +162,22 @@ function init() {
                     init();  
                 }                
                 else if (res_five.nextStep == "Save to HTML file") {
+                    var fs = require('fs');
+
+                
+                    fs.writeFile('./myEmployeeSummary.html', 'Hello put code here content!', function (err) {
+                        if (err) throw err;
+                        console.log('Saved!');
+                        process.exit();
+                      });
+                }
         //===================================================================================================
                    //Need to code this 
                    //See Employee summary
                     //check weather program for adding cards dynamically 
                     //Loop through each employee object in the array.
                     //make html card for each employ on the team.
-                   /* employees.forEach( => {
+                   /* employees.forEach( => 
 
 
 
@@ -195,7 +205,7 @@ function init() {
                 </div>*/
 
 //=======================================================================================================
-                } 
+                
                 else if (res_five.nextStep == "Exit") {
                     process.exit();
                 }
