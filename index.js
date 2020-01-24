@@ -8,11 +8,9 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 //Include HTML Generator
 const generateHTML = require("./generateHTML");
-let address = "";
-let i = 0;
 let employees = [];
 let IsThereAManager = false;
-
+var x = "";
 function init() {
 
     inquirer
@@ -79,12 +77,13 @@ function init() {
                             {
                                 type: "input",
                                 name: "gitHubProfile",
-                                message: "Please provide the engineer's GitHub profile username?",
-                                validate: validateGithubUsername
+                                message: "Please provide the Engineer's GitHub profile username?",
+                                validate: validateGitHubUsername
                             }
                         ])
                         .then(res_three => {
                             const newEngineer = new Engineer(res.name, res.id, res.email, res.title, res_three.gitHubProfile);
+                            console.log(newEngineer);
                             employees.push(newEngineer);
                             anotherEmployee();
                         })
@@ -96,7 +95,7 @@ function init() {
                             {
                                 type: "input",
                                 name: "school",
-                                message: "What is the employee's school name?",
+                                message: "What is the Employee's school name?",
                                 validate: validateEmployeeName
                             }
                         ])
@@ -136,7 +135,7 @@ function init() {
             return true;
             }
         }
-        function validateGithubUsername(input) {
+        function validateGitHubUsername(input) {
             if (!input.match(/^[A-Z0-9_]+$/i)) {
             return "Sorry, the Github username can only contain numbers and/or letters and/or _)";
             } else {
@@ -162,14 +161,38 @@ function init() {
                     init();  
                 }                
                 else if (res_five.nextStep == "Save to HTML file") {
-                    var fs = require('fs');
-
-                
-                    fs.writeFile('./myEmployeeSummary.html', 'Hello put code here content!', function (err) {
+                    
+                    
+                    fs.readFile("./templates/main.html", 'utf8', function (err,data) {
+                     if (err) {
+                        return console.log(err);
+                        }
+                        x = x + data;
+                        //console.log(x);
+                    
+                    var cardString = [];
+                    
+                    for(let i = 0 ; i<employees.length ; i++){
+                        
+                        if(employees[i].title === "Manager"){
+                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].name + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">Manager</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].id + '</div><div class="row" id="idDetail">Email:  ' + employees[i].email + '</div><div class="row" id="location">Office Number:  ' + employees[i].officeNumber + '</div></div></div></div>';
+                        }else if(employees[i].title === "Engineer"){
+                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].name + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">Engineer</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].id + '</div><div class="row" id="idDetail">Email:  ' + employees[i].email + '</div><div class="row" id="location">GitHub Username:  ' + employees[i].gitHubProfile + '</div></div></div></div>';
+                        }else if(employees[i].title === "Intern"){
+                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].name + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">Intern</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].id + '</div><div class="row" id="idDetail">Email:  ' + employees[i].email + '</div><div class="row" id="location">School:  ' + employees[i].school + '</div></div></div></div>'; 
+                        };
+                        
+                        x = x.concat(cardString);
+                        //console.log(x);
+                    }
+                    x = x.concat("</div></div></body></html>");
+                    console.log(x);
+                    fs.writeFile('./output/myEmployeeSummary.html', x, function (err) {
                         if (err) throw err;
-                        console.log('Saved!');
-                        process.exit();
-                      });
+                       // console.log('Saved!');
+                    });//End of fs.writeFile 
+                    //}//end for loop
+                });//end fs.readfile
                 }
         //===================================================================================================
                    //Need to code this 
