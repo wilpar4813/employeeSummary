@@ -2,17 +2,14 @@
 const inquirer = require("inquirer");
 var fs = require('fs');
 //Install class constructors
-const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-//Include HTML Generator
-const generateHTML = require("./generateHTML");
 let employees = [];
 let IsThereAManager = false;
 var x = "";
-function init() {
 
+function init() {
     inquirer
         //prompt user for employee name, id number, email address, and title
         .prompt([
