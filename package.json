@@ -1,0 +1,27 @@
+{
+  "name": "employeesummary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "inquirer": "^7.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilpar4813/employeeSummary.git"
+  },
+  "author": "Tripp Parham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wilpar4813/employeeSummary/issues"
+  },
+  "homepage": "https://github.com/wilpar4813/employeeSummary#readme"
+}

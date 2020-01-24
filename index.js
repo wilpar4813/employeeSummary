@@ -60,7 +60,7 @@ function init() {
                             ])
                             //Use the second response to assign the managers office number to address
                             .then(res_two => {
-                                const newManager = new Manager(res.name, res.id, res.email, res.title, res_two.officeNumber);
+                                const newManager = new Manager(res.name, res.id, res.email, res_two.officeNumber);
                                 employees.push(newManager);
                                 anotherEmployee();
                             })
@@ -82,7 +82,7 @@ function init() {
                             }
                         ])
                         .then(res_three => {
-                            const newEngineer = new Engineer(res.name, res.id, res.email, res.title, res_three.gitHubProfile);
+                            const newEngineer = new Engineer(res.name, res.id, res.email, res_three.gitHubProfile);
                             console.log(newEngineer);
                             employees.push(newEngineer);
                             anotherEmployee();
@@ -100,7 +100,7 @@ function init() {
                             }
                         ])
                         .then(res_four => {
-                            const newIntern = new Intern(res.name, res.id, res.email, res.title, res_four.school);
+                            const newIntern = new Intern(res.name, res.id, res.email, res_four.school);
                             employees.push(newIntern);
                             anotherEmployee();
                         })
@@ -174,19 +174,19 @@ function init() {
                     
                     for(let i = 0 ; i<employees.length ; i++){
                         
-                        if(employees[i].title === "Manager"){
-                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].name + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">Manager</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].id + '</div><div class="row" id="idDetail">Email:  ' + employees[i].email + '</div><div class="row" id="location">Office Number:  ' + employees[i].officeNumber + '</div></div></div></div>';
-                        }else if(employees[i].title === "Engineer"){
-                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].name + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">Engineer</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].id + '</div><div class="row" id="idDetail">Email:  ' + employees[i].email + '</div><div class="row" id="location">GitHub Username:  ' + employees[i].gitHubProfile + '</div></div></div></div>';
-                        }else if(employees[i].title === "Intern"){
-                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].name + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">Intern</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].id + '</div><div class="row" id="idDetail">Email:  ' + employees[i].email + '</div><div class="row" id="location">School:  ' + employees[i].school + '</div></div></div></div>'; 
+                        if(employees[i].getRole() === "Manager"){
+                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].getName() + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">' + employees[i].getRole() + '</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].getId() + '</div><div class="row" id="idDetail">Email:  ' + employees[i].getEmail() + '</div><div class="row" id="location">Office Number:  ' + employees[i].getOfficeNumber() + '</div></div></div></div>';
+                        }else if(employees[i].getRole() === "Engineer"){
+                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].getName() + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">' + employees[i].getRole() + '</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].getId() + '</div><div class="row" id="idDetail">Email:  ' + employees[i].getEmail() + '</div><div class="row" id="location">GitHub Username:  ' + employees[i].getGitHub() + '</div></div></div></div>';
+                        }else if(employees[i].getRole() === "Intern"){
+                            cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].getName() + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">' + employees[i].getRole() + '</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].getId() + '</div><div class="row" id="idDetail">Email:  ' + employees[i].getEmail() + '</div><div class="row" id="location">School:  ' + employees[i].getSchool() + '</div></div></div></div>'; 
                         };
                         
                         x = x.concat(cardString);
                         //console.log(x);
                     }
                     x = x.concat("</div></div></body></html>");
-                    console.log(x);
+                    //console.log(x);
                     fs.writeFile('./output/myEmployeeSummary.html', x, function (err) {
                         if (err) throw err;
                        // console.log('Saved!');
