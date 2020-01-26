@@ -40,7 +40,7 @@ https://wilpar4813.github.io/employeeSummary/
 - index.js  
 - package.json
 - package-lock.json
-- assets folder
+- employeeSummaryExample.gif  
 - templates folder (HTML Templates)
     - Main.html
 - lib folder
@@ -66,9 +66,16 @@ https://wilpar4813.github.io/employeeSummary/
 
 ***Known bugs[0]***
 
-***Troubleshooting[4]***
-
-
+***Troubleshooting[9]***
+- Employee Name, ID, and email are all input correctly.
+- Manager office number is correctly input if manager is selected as title.
+- Engineer github address is correctly input if engineer is selected as title.
+- Intern school is correctly input if intern is selected as title.
+- Validation works for all of the above.
+- Corectly limits to only one manager.
+- Option to add another employee works correctly.
+- Option to save as team.html saves correctly to the output folder. 
+- Option to exit program works correctly.
 
 
 ***Credits and acknowledgments***
@@ -79,4 +86,4 @@ Special thanks to the Instructors and Staff at the UNC Coding Bootcamp. Especial
 
 ***Site Updates***
 
--Verion 1.0.0 Released Saturday, January 26th, 2020
+-Verion 1.0.0 Released Saturday, January 25th, 2020

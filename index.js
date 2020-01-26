@@ -59,7 +59,7 @@ function init() {
                             .then(res_two => {
                                 const newManager = new Manager(res.name, res.id, res.email, res_two.officeNumber);
                                 employees.push(newManager);
-                                anotherEmployee();
+                                addPrintExit();
                             })
                     } else {
                         console.log("A manager has already been assigned.  Please try again.");
@@ -80,9 +80,9 @@ function init() {
                         ])
                         .then(res_three => {
                             const newEngineer = new Engineer(res.name, res.id, res.email, res_three.gitHubProfile);
-                            console.log(newEngineer);
+                            //console.log(newEngineer);
                             employees.push(newEngineer);
-                            anotherEmployee();
+                            addPrintExit();
                         })
                         
                 } else if (res.title == "Intern") {
@@ -99,14 +99,10 @@ function init() {
                         .then(res_four => {
                             const newIntern = new Intern(res.name, res.id, res.email, res_four.school);
                             employees.push(newIntern);
-                            anotherEmployee();
-                        })
-                        
+                            addPrintExit();
+                        })    
                 } // end of ifs
-       
         }) // end of .then
-        //
-
         // Validation Functions  
         function validateEmployeeName(input) {
             //Check name to ensure it only contains letter and spaces
@@ -141,9 +137,8 @@ function init() {
         }
         // end of Input validation functions 
 
-
-        function anotherEmployee() {
-            console.log(employees);
+        function addPrintExit() {
+            //console.log(employees);
             inquirer
             .prompt([
                 {
@@ -158,19 +153,14 @@ function init() {
                     init();  
                 }                
                 else if (res_five.nextStep == "Save to HTML file") {
-                    
-                    
                     fs.readFile("./templates/main.html", 'utf8', function (err,data) {
                      if (err) {
                         return console.log(err);
                         }
                         x = x + data;
                         //console.log(x);
-                    
                     var cardString = [];
-                    
                     for(let i = 0 ; i<employees.length ; i++){
-                        
                         if(employees[i].getRole() === "Manager"){
                             cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].getName() + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">' + employees[i].getRole() + '</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].getId() + '</div><div class="row" id="idDetail">Email:  ' + employees[i].getEmail() + '</div><div class="row" id="location">Office Number:  ' + employees[i].getOfficeNumber() + '</div></div></div></div>';
                         }else if(employees[i].getRole() === "Engineer"){
@@ -178,59 +168,23 @@ function init() {
                         }else if(employees[i].getRole() === "Intern"){
                             cardString = '<div class="col card" id="employeeCard"><div class="row" id="nameTitleRow"><div class="row" id="nameRow"><h2 id="name">' + employees[i].getName() + '</h2></div><br><div class="row" id="titleRow"><h3 id="title">' + employees[i].getRole() + '</h3></div></div><div class="row" id="idRow"><div id="idBox"><div class="row" id="idDetail">ID:  ' + employees[i].getId() + '</div><div class="row" id="idDetail">Email:  ' + employees[i].getEmail() + '</div><div class="row" id="location">School:  ' + employees[i].getSchool() + '</div></div></div></div>'; 
                         };
-                        
                         x = x.concat(cardString);
                         //console.log(x);
                     }
                     x = x.concat("</div></div></body></html>");
                     //console.log(x);
-                    fs.writeFile('./output/myEmployeeSummary.html', x, function (err) {
+                    fs.writeFile('./output/team.html', x, function (err) {
                         if (err) throw err;
                        // console.log('Saved!');
                     });//End of fs.writeFile 
                     //}//end for loop
                 });//end fs.readfile
                 }
-        //===================================================================================================
-                   //Need to code this 
-                   //See Employee summary
-                    //check weather program for adding cards dynamically 
-                    //Loop through each employee object in the array.
-                    //make html card for each employ on the team.
-                   /* employees.forEach( => 
-
-
-
-                    $("#teamLineUp").html("testing");
-                    <div class='col card' id="employeeCard">
-                    <div class="row" id="nameTitleRow">
-                        <div class="row" id="nameRow">
-                            <h2 id="name">Tripp</h2>
-                        </div>
-                        <br>
-                        <div class="row" id="titleRow">
-                            <h3 id="title">Engineer</h3>
-                        </div>
-                    </div>
-                    <div class="row" id="idRow">
-                        <div id="idBox">
-                            <div class="row" id="idDetail">ID:
-                            </div>
-                            <div class="row" id="idDetail">Email:
-                            </div>
-                            <div class="row" id="location">Office Number:
-                            </div>
-                        </div>
-                    </div>
-                </div>*/
-
-//=======================================================================================================
-                
-                else if (res_five.nextStep == "Exit") {
+              else if (res_five.nextStep == "Exit") {
                     process.exit();
                 }
             }) // end inquire prompt/then
-        } // end anotherEmployee function
+        } // end addPrintExit function
 } // end function init
-
+//Call init to start program
 init();
