@@ -37,7 +37,7 @@ https://wilpar4813.github.io/employeeSummary/
 
 - README.md (Read for information on site development) 
 - FORME.md  (Development use only)
-- index.js  
+- app.js  
 - package.json
 - package-lock.json
 - employeeSummaryExample.gif  
